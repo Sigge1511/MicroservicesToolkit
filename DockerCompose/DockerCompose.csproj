@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.Docker.Sdk">
+	<PropertyGroup Label="Globals">
+		<ProjectVersion>2.1</ProjectVersion>
+		<DockerTargetOS>Linux</DockerTargetOS>
+		<ProjectGuid>{A1B2C3D4-E5F6-4G7H-8I9J-K0L1M2N3O4P5}</ProjectGuid>
+		<DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
+		<DockerServiceName>web-ui</DockerServiceName>
+		<DockerServiceUrl>{ServiceScheme}://localhost:6004</DockerServiceUrl>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="docker-compose.yml" />
+		<None Include=".dockerignore" />
+	</ItemGroup>
+</Project>
