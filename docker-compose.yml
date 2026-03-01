@@ -6,7 +6,7 @@ services:
     container_name: microservices-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=E7873723AE9A4462AC00417525D0CE1D
+      - SA_PASSWORD=-Zw6M3_CP4)uZKC4
     ports:
       - "1433:1433"
     volumes:
@@ -14,7 +14,7 @@ services:
     networks:
       - microservices-network
     healthcheck:
-      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "YourStrong@Password123" -Q "SELECT 1"
+      test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "-Zw6M3_CP4)uZKC4" -Q "SELECT 1"
       interval: 10s
       timeout: 5s
       retries: 5
@@ -26,7 +26,7 @@ services:
     container_name: logging-service
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MicroservicesLogging;User Id=sa;Password=YourStrong@Password123;TrustServerCertificate=True;
+      - ConnectionStrings__DefaultConnection=Server=sqlserver;Database=MicroservicesLogging;User Id=sa;Password=-Zw6M3_CP4)uZKC4;TrustServerCertificate=True;
     ports:
       - "5003:80"
     depends_on:
