@@ -1,0 +1,261 @@
+# Microservices Toolkit
+
+A comprehensive .NET 10 microservices architecture demonstration with three independent services, an API Gateway, and a modern web interface.
+
+## Architecture Overview
+
+```
+┌─────────────────┐
+│   Web UI        │
+│  (Razor Pages)  │
+└────────┬────────┘
+         │
+    ┌────▼────────────┐
+    │  API Gateway    │
+    │    (YARP)       │
+    └────┬────────────┘
+         │
+    ┌────▼──────────────────────┐
+    │                           │
+┌───▼──────┐  ┌────▼───────┐  ┌▼──────────┐
+│ Product  │  │   Order    │  │  Logging  │
+│ Service  │  │  Service   │  │  Service  │
+└──────────┘  └────────────┘  └─────┬─────┘
+                                     │
+                              ┌──────▼─────┐
+                              │ SQL Server │
+                              └────────────┘
+```
+
+## Services
+
+### ProductService (Port 5001)
+- Manages products with in-memory storage
+- Provides GET endpoints for products
+- Sends logs to LoggingService
+
+### OrderService (Port 5002)
+- Creates and manages orders
+- Validates products via ProductService
+- Logs all operations to LoggingService
+
+### LoggingService (Port 5003)
+- Central logging system
+- Stores logs in SQL Server database
+- Provides filtering and retrieval endpoints
+
+### API Gateway (Port 5000)
+- YARP-based reverse proxy
+- Routes requests to appropriate services
+- Centralized entry point
+
+### Web UI (Port 5004)
+- Razor Pages interface
+- Monochrome alternative aesthetic
+- Dashboard, Products, Orders, and Logs views
+- Responsive design
+
+## Prerequisites
+
+- .NET 10 SDK
+- SQL Server (or Docker for containerized deployment)
+- Visual Studio 2022 or VS Code
+
+## Getting Started
+
+### Option 1: Docker Compose (Recommended)
+
+```bash
+# Build and start all services
+docker-compose up --build
+
+# Access the web UI
+http://localhost:5004
+
+# Access services directly
+Product Service: http://localhost:5001/swagger
+Order Service: http://localhost:5002/swagger
+Logging Service: http://localhost:5003/swagger
+API Gateway: http://localhost:5000
+```
+
+### Option 2: Local Development
+
+1. **Configure SQL Server Connection**
+
+Update the connection string in `src/LoggingService/appsettings.json`:
+
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=YOUR_SERVER;Database=MicroservicesLogging;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
+  }
+}
+```
+
+2. **Start Services in Order**
+
+Terminal 1 - LoggingService:
+```bash
+cd src/LoggingService
+dotnet run --urls "http://localhost:5003"
+```
+
+Terminal 2 - ProductService:
+```bash
+cd src/ProductService
+dotnet run --urls "http://localhost:5001"
+```
+
+Terminal 3 - OrderService:
+```bash
+cd src/OrderService
+dotnet run --urls "http://localhost:5002"
+```
+
+Terminal 4 - API Gateway:
+```bash
+cd src/ApiGateway
+dotnet run --urls "http://localhost:5000"
+```
+
+Terminal 5 - Web UI:
+```bash
+cd src/Web
+dotnet run --urls "http://localhost:5004"
+```
+
+## Testing
+
+Run all tests:
+```bash
+dotnet test
+```
+
+Run specific test project:
+```bash
+dotnet test tests/ProductService.Tests
+dotnet test tests/OrderService.Tests
+dotnet test tests/LoggingService.Tests
+```
+
+## API Endpoints
+
+### ProductService
+- `GET /api/products` - Get all products
+- `GET /api/products/{id}` - Get product by ID
+
+### OrderService
+- `GET /api/orders` - Get all orders
+- `POST /api/orders` - Create new order
+  ```json
+  {
+    "productId": 1,
+    "quantity": 2
+  }
+  ```
+
+### LoggingService
+- `GET /api/logs` - Get logs (with optional filters)
+  - Query parameters: `serviceName`, `level`, `limit`
+- `POST /api/logs` - Create log entry
+  ```json
+  {
+    "serviceName": "MyService",
+    "level": "INFO",
+    "message": "Log message",
+    "time": "2026-03-01T12:00:00Z"
+  }
+  ```
+
+## Project Structure
+
+```
+MicroservicesToolkit/
+├── src/
+│   ├── ProductService/       # Product management service
+│   ├── OrderService/         # Order management service
+│   ├── LoggingService/       # Central logging service
+│   ├── ApiGateway/          # YARP reverse proxy
+│   └── Web/                 # Razor Pages UI
+├── tests/
+│   ├── ProductService.Tests/
+│   ├── OrderService.Tests/
+│   └── LoggingService.Tests/
+├── docker-compose.yml
+└── MicroservicesToolkit.sln
+```
+
+## Database Migrations
+
+The LoggingService automatically applies migrations on startup. To create new migrations:
+
+```bash
+cd src/LoggingService
+dotnet ef migrations add MigrationName
+```
+
+## Configuration
+
+Each service can be configured via `appsettings.json`:
+
+```json
+{
+  "Services": {
+    "ProductService": "http://localhost:5001",
+    "OrderService": "http://localhost:5002",
+    "LoggingService": "http://localhost:5003"
+  }
+}
+```
+
+When running in Docker, these are automatically configured via environment variables.
+
+## Design Features
+
+The web UI features a monochrome alternative aesthetic with:
+- Brutalist-inspired typography (Space Mono + Work Sans)
+- Strong black/white contrast
+- Responsive grid layouts
+- Modern CSS with custom properties
+- Fluid typography using clamp()
+- Mobile-responsive design
+
+## Testing Workflow
+
+1. **Start all services** (Docker or manual)
+2. **View products** at http://localhost:5004/Products
+3. **Create an order** at http://localhost:5004/Orders
+4. **Check logs** at http://localhost:5004/Logs
+5. **Test with invalid product ID** to see error handling
+
+## Common Issues
+
+### Database Connection Failed
+Ensure SQL Server is running and connection string is correct. The default Docker Compose configuration uses:
+- Server: sqlserver
+- User: sa
+- Password: YourStrong@Password123
+
+### Port Already in Use
+Change ports in `docker-compose.yml` or when running `dotnet run --urls`.
+
+### Services Can't Communicate
+Verify service URLs in `appsettings.json` match the running ports.
+
+## Contributing
+
+This is a demonstration project. Feel free to:
+- Add new services
+- Implement additional features
+- Improve error handling
+- Add more comprehensive tests
+- Enhance the UI
+
+## License
+
+MIT License - Free to use and modify
+
+## Author
+
+Built as a learning toolkit for microservices architecture in .NET 10

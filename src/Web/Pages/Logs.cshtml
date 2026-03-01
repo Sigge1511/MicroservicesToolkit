@@ -1,0 +1,59 @@
+@page
+@model LogsModel
+@{
+    ViewData["Title"] = "Logs";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Logs</h1>
+    <p class="page-subtitle">System activity and monitoring</p>
+</div>
+
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+        <h2 class="card-title">Log Entries</h2>
+        <form method="get" style="display: flex; gap: var(--spacing-sm); align-items: center;">
+            <select class="form-select" name="serviceName" style="width: auto;">
+                <option value="">All Services</option>
+                <option value="ProductService" selected="@(Model.ServiceFilter == "ProductService")">ProductService</option>
+                <option value="OrderService" selected="@(Model.ServiceFilter == "OrderService")">OrderService</option>
+                <option value="LoggingService" selected="@(Model.ServiceFilter == "LoggingService")">LoggingService</option>
+            </select>
+            <select class="form-select" name="level" style="width: auto;">
+                <option value="">All Levels</option>
+                <option value="INFO" selected="@(Model.LevelFilter == "INFO")">INFO</option>
+                <option value="ERROR" selected="@(Model.LevelFilter == "ERROR")">ERROR</option>
+            </select>
+            <button type="submit" class="btn">Filter</button>
+            <a href="/Logs" class="btn">Clear</a>
+        </form>
+    </div>
+
+    @if (Model.Logs != null && Model.Logs.Any())
+    {
+        <div>
+            @foreach (var log in Model.Logs)
+            {
+                <div class="log-entry log-@log.Level.ToLower()">
+                    <span class="log-time">@log.Time.ToString("yyyy-MM-dd HH:mm:ss")</span>
+                    <span class="log-service">[@log.ServiceName]</span>
+                    <span style="color: var(--gray-600);">[@log.Level]</span>
+                    @log.Message
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <p style="color: var(--gray-500);">No logs available</p>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        // Auto-refresh logs every 5 seconds
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    </script>
+}

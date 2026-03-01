@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Microservices Toolkit</title>
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <header>
+        <nav class="nav-container">
+            <div class="nav-brand">
+                <a href="/">TOOLKIT</a>
+            </div>
+            <div class="nav-links">
+                <a href="/" class="nav-link">Dashboard</a>
+                <a href="/Products" class="nav-link">Products</a>
+                <a href="/Orders" class="nav-link">Orders</a>
+                <a href="/Logs" class="nav-link">Logs</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <span class="footer-text">Microservices Toolkit</span>
+            <span class="footer-year">@DateTime.Now.Year</span>
+        </div>
+    </footer>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

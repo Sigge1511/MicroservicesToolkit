@@ -1,0 +1,57 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Dashboard</h1>
+    <p class="page-subtitle">System overview and statistics</p>
+</div>
+
+<div class="grid grid-3">
+    <div class="stat-card">
+        <div class="stat-value">@Model.TotalProducts</div>
+        <div class="stat-label">Products</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">@Model.TotalOrders</div>
+        <div class="stat-label">Orders</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-value">@Model.TotalLogs</div>
+        <div class="stat-label">Logs</div>
+    </div>
+</div>
+
+<div class="grid grid-2" style="margin-top: var(--spacing-lg);">
+    <div class="card">
+        <h2 class="card-title">Recent Activity</h2>
+        <div class="card-content">
+            @if (Model.RecentLogs != null && Model.RecentLogs.Any())
+            {
+                @foreach (var log in Model.RecentLogs.Take(5))
+                {
+                    <div class="log-entry log-@log.Level.ToLower()">
+                        <span class="log-time">@log.Time.ToString("HH:mm:ss")</span>
+                        <span class="log-service">[@log.ServiceName]</span>
+                        @log.Message
+                    </div>
+                }
+            }
+            else
+            {
+                <p>No recent activity</p>
+            }
+        </div>
+    </div>
+    
+    <div class="card">
+        <h2 class="card-title">Quick Actions</h2>
+        <div class="card-content" style="display: flex; flex-direction: column; gap: var(--spacing-sm);">
+            <a href="/Products" class="btn btn-primary">View Products</a>
+            <a href="/Orders" class="btn btn-primary">Create Order</a>
+            <a href="/Logs" class="btn">View All Logs</a>
+        </div>
+    </div>
+</div>

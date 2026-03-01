@@ -1,0 +1,43 @@
+@page
+@model ProductsModel
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Products</h1>
+    <p class="page-subtitle">Available products in the system</p>
+</div>
+
+@if (Model.Products != null && Model.Products.Any())
+{
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var product in Model.Products)
+                {
+                    <tr>
+                        <td>@product.Id</td>
+                        <td>@product.Name</td>
+                        <td>@product.Price.ToString("C")</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-content">
+            <p>No products available or service is unavailable.</p>
+        </div>
+    </div>
+}

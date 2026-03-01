@@ -1,0 +1,77 @@
+@page
+@model OrdersModel
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<div class="page-header">
+    <h1 class="page-title">Orders</h1>
+    <p class="page-subtitle">Create and manage orders</p>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <div class="alert @(Model.IsSuccess ? "alert-success" : "alert-error")">
+        @Model.Message
+    </div>
+}
+
+<div class="grid grid-2">
+    <div class="card">
+        <h2 class="card-title">Create Order</h2>
+        <form method="post" style="margin-top: var(--spacing-md);">
+            <div class="form-group">
+                <label class="form-label" for="productId">Product</label>
+                <select class="form-select" id="productId" name="ProductId" asp-for="ProductId" required>
+                    <option value="">Select a product</option>
+                    @if (Model.Products != null)
+                    {
+                        @foreach (var product in Model.Products)
+                        {
+                            <option value="@product.Id">@product.Name - @product.Price.ToString("C")</option>
+                        }
+                    }
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label class="form-label" for="quantity">Quantity</label>
+                <input class="form-input" type="number" id="quantity" name="Quantity" asp-for="Quantity" min="1" value="1" required />
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Create Order</button>
+        </form>
+    </div>
+    
+    <div class="card">
+        <h2 class="card-title">Recent Orders</h2>
+        @if (Model.Orders != null && Model.Orders.Any())
+        {
+            <div class="table-container" style="margin-top: var(--spacing-md);">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Product ID</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var order in Model.Orders.Take(10))
+                        {
+                            <tr>
+                                <td>@order.Id</td>
+                                <td>@order.ProductId</td>
+                                <td>@order.Quantity</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p style="margin-top: var(--spacing-md); color: var(--gray-500);">No orders yet</p>
+        }
+    </div>
+</div>
