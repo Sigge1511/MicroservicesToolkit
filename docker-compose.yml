@@ -6,7 +6,7 @@ services:
     container_name: microservices-sqlserver
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=YourStrong@Password123
+      - SA_PASSWORD=E7873723AE9A4462AC00417525D0CE1D
     ports:
       - "1433:1433"
     volumes:
