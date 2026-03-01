@@ -60,7 +60,7 @@ public class LogsControllerTests
     }
 
     [Fact]
-    public async Task GetLogs_FiltersBy ServiceName()
+    public async Task GetLogs_FiltersByServiceName()
     {
         using var context = CreateInMemoryContext();
         
