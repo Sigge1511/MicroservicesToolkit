@@ -1,5 +1,11 @@
 # Microservices Toolkit
 
+## Current notes in google docs
+
+https://docs.google.com/document/d/1GFqZCLwzrwnRlOh8bHffW8zXHzeuB_jC53JJu9ZiUJk/edit?usp=sharing
+
+
+
 ## Choices
 BUILT WITH CLAUDE TO HELP SAVE TIME WHILE I'M FOCUSING ON MY INTERNSHIP. 
 SEE THE EXACT PROMPT I GAVE TO CLAUDE IN THE TEXTFILES ADDED WITH THE NAME TOOLKIT PROMPT.
