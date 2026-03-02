@@ -51,22 +51,22 @@ A comprehensive .NET 10 microservices architecture demonstration with three inde
 - Provides GET endpoints for products
 - Sends logs to LoggingService
 
-### OrderService (Port 5002)
+### OrderService (Port 6002)
 - Creates and manages orders
 - Validates products via ProductService
 - Logs all operations to LoggingService
 
-### LoggingService (Port 5003)
+### LoggingService (Port 6003)
 - Central logging system
 - Stores logs in SQL Server database
 - Provides filtering and retrieval endpoints
 
-### API Gateway (Port 5000)
+### API Gateway (Port 6000)
 - YARP-based reverse proxy
 - Routes requests to appropriate services
 - Centralized entry point
 
-### Web UI (Port 5004)
+### Web UI (Port 6004)
 - Razor Pages interface
 - Monochrome alternative aesthetic
 - Dashboard, Products, Orders, and Logs views
