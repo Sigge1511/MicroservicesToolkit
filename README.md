@@ -4,6 +4,7 @@
 
 https://docs.google.com/document/d/1GFqZCLwzrwnRlOh8bHffW8zXHzeuB_jC53JJu9ZiUJk/edit?usp=sharing
 
+This readme also needs updates about ports and connection strings. 
 
 
 ## Choices
