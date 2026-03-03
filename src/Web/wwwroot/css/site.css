@@ -47,8 +47,8 @@ html {
 
 body {
     font-family: var(--font-sans);
-    background: var(--white);
-    color: var(--black);
+    background: var(--gray-800);
+    color: var(--white);
     line-height: 1.6;
     min-height: 100vh;
     display: flex;
@@ -130,7 +130,7 @@ main {
 
 .page-subtitle {
     font-size: var(--text-base);
-    color: var(--gray-500);
+    color: var(--gray-300);
     margin-top: var(--spacing-xs);
 }
 
@@ -148,8 +148,9 @@ main {
 }
 
 .card {
-    background: var(--white);
+    background: var(--gray-700);
     border: 3px solid var(--black);
+    color: var(--black);
     padding: var(--spacing-md);
     transition: all var(--transition);
 }
@@ -169,7 +170,7 @@ main {
 
 .card-content {
     font-size: var(--text-base);
-    color: var(--gray-700);
+    color: var(--gray-300);
 }
 
 .stat-card {
@@ -258,10 +259,13 @@ main {
 .table-container {
     overflow-x: auto;
     border: 3px solid var(--black);
+    color: var(--white);
 }
 
 table {
     width: 100%;
+    background: var(--black);
+    color: var(--white);
     border-collapse: collapse;
     font-family: var(--font-mono);
     font-size: var(--text-sm);
