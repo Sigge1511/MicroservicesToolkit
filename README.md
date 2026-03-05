@@ -88,7 +88,7 @@ A comprehensive .NET 10 microservices architecture demonstration with three inde
 docker-compose up --build
 
 # Access the web UI
-http://localhost:5004
+http://localhost:6004
 
 # Access services directly
 Product Service: http://localhost:5001/swagger
@@ -106,55 +106,9 @@ Update the connection string in `src/LoggingService/appsettings.json`:
 ```json
 {
   "ConnectionStrings": {
-    "DefaultConnection": "Server=YOUR_SERVER;Database=MicroservicesLogging;User Id=YOUR_USER;Password=YOUR_PASSWORD;TrustServerCertificate=True;"
+    "DefaultConnection": "Server=microservices-sqlserver;Database=MicroservicesLogging;User Id=sa;Password=Zw6M3_CP4uZKC4;TrustServerCertificate=True;"
   }
 }
-```
-
-2. **Start Services in Order**
-
-Terminal 1 - LoggingService:
-```bash
-cd src/LoggingService
-dotnet run --urls "http://localhost:5003"
-```
-
-Terminal 2 - ProductService:
-```bash
-cd src/ProductService
-dotnet run --urls "http://localhost:5001"
-```
-
-Terminal 3 - OrderService:
-```bash
-cd src/OrderService
-dotnet run --urls "http://localhost:5002"
-```
-
-Terminal 4 - API Gateway:
-```bash
-cd src/ApiGateway
-dotnet run --urls "http://localhost:5000"
-```
-
-Terminal 5 - Web UI:
-```bash
-cd src/Web
-dotnet run --urls "http://localhost:5004"
-```
-
-## Testing
-
-Run all tests:
-```bash
-dotnet test
-```
-
-Run specific test project:
-```bash
-dotnet test tests/ProductService.Tests
-dotnet test tests/OrderService.Tests
-dotnet test tests/LoggingService.Tests
 ```
 
 ## API Endpoints
@@ -220,9 +174,9 @@ Each service can be configured via `appsettings.json`:
 ```json
 {
   "Services": {
-    "ProductService": "http://localhost:5001",
-    "OrderService": "http://localhost:5002",
-    "LoggingService": "http://localhost:5003"
+    "ProductService": "http://localhost:6001",
+    "OrderService": "http://localhost:6002",
+    "LoggingService": "http://localhost:6003"
   }
 }
 ```
@@ -242,9 +196,9 @@ The web UI features a monochrome alternative aesthetic with:
 ## Testing Workflow
 
 1. **Start all services** (Docker or manual)
-2. **View products** at http://localhost:5004/Products
-3. **Create an order** at http://localhost:5004/Orders
-4. **Check logs** at http://localhost:5004/Logs
+2. **View products** at http://localhost:6004/Products
+3. **Create an order** at http://localhost:6004/Orders
+4. **Check logs** at http://localhost:6004/Logs
 5. **Test with invalid product ID** to see error handling
 
 ## Common Issues
@@ -253,7 +207,7 @@ The web UI features a monochrome alternative aesthetic with:
 Ensure SQL Server is running and connection string is correct. The default Docker Compose configuration uses:
 - Server: sqlserver
 - User: sa
-- Password: YourStrong@Password123
+- Password: Zw6M3_CP4uZKC4
 
 ### Port Already in Use
 Change ports in `docker-compose.yml` or when running `dotnet run --urls`.
